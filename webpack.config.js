@@ -102,6 +102,13 @@ module.exports = {
                 include: [
                     includePath, nodeModulesPath
                 ]
+            },{
+                test: /\.hbs/,
+                loader: 'handlebars-loader',
+                include: [
+                    templatePath
+                ],
+                exclude: /node_modules/
             }
 
         ]

@@ -41,7 +41,9 @@
     "babel-core"          : "*",
     "babel-loader"        : "*",
     "babel-runtime"       : "*",
-    "http-server"		  : "*"
+    "http-server"		  : "*",
+    "handlebars-loader"   : "1.1.4",
+    "gsap"                : "1.18.0"
   },
 
   "scripts": { 
