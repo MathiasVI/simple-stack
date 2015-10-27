@@ -1,0 +1,70 @@
+{
+  "name": "--",
+  "description": "--",
+  "version": "0.0.1",
+  "private": true,
+  "author": "-",
+  "contributors": [
+    "Jp G"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  
+  "bugs": {
+    "url": ""
+  },
+  
+  "app": { },
+  
+  "engines": {
+    "node": "latest",
+    "npm": "latest"
+  },
+
+  "dependencies": {
+    
+  },
+
+  "devDependencies": { 
+    "live-reload"         : "latest",
+    "parallelshell"       : "latest",
+    "watch"               : "latest",
+    "webpack"             : "*",
+    "node-libs-browser"   : "*",
+    "eslint"              : "latest",
+    "autoprefixer-stylus" : "latest",
+    "stylus"              : "latest",
+    "cssmin"              : "latest",
+    "babel-eslint"        : "latest",
+    "babel-core"          : "*",
+    "babel-loader"        : "*",
+    "babel-runtime"       : "*",
+    "http-server"		  : "*"
+  },
+
+  "scripts": { 
+    "lint"			        : "eslint ./src/js/**/*.js; exit 0",
+
+    "livereload"    		: "$(npm bin)/live-reload --port 9091 ./build/public/",
+    
+    "build:stylus"          : "npm run build:stylus:global",
+    "build:stylus:global"   : "$(npm bin)/stylus -u autoprefixer-stylus --sourcemap ./src/css/global.styl -o ./build/public/assets/css/global.css",
+    "build:js"      		: "ENV_PROD=0 webpack",
+    
+    "dist:stylus"           : "npm run build:stylus:global",
+    "dist:stylus:global"    : "$(npm bin)/stylus -u autoprefixer-stylus --sourcemap ./src/css/global.styl -o ./deploy/public/assets/css/global.css",
+    "dist:js"      			: "ENV_PROD=1 webpack",
+
+
+    "watch:css"     		: "watch 'npm run build:stylus' ./src/css/",
+    "watch:js"      		: "ENV_PROD=0 webpack --progress --colors --watch --cache",
+
+    "server"					: "http-server -p 8080 build/public/",
+
+    "dev"           		: "npm run watch:js & parallelshell 'npm run watch:css' 'npm run livereload' 'npm run lint' 'npm run server'",
+    "deploy"				: "npm run dist:js & parallelshell 'npm run dist:stylus' 'npm run lint'"
+  }
+}
+

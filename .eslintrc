@@ -1,0 +1,16 @@
+{
+	"parser": "babel-eslint",
+	"rules": {
+		"strict": [0, "never"],
+		"no-mixed-spaces-and-tabs": [2, "smart-tabs"],
+		"no-unused-vars": 1              // allow declaration of variables that are not used in the code
+		
+  	},
+  	"plugins": [
+
+  	],
+	"ecmaFeatures": {
+		"modules" : "true"
+	},
+
+}

@@ -1,0 +1,161 @@
+
+@font-face {
+    font-family: 'FuturaStd-Heavy';
+    src: url('../fonts/FuturaStd/FuturaStd-Heavy.eot');
+}
+
+@font-face {
+    font-family: 'FuturaStd-Heavy';
+    src: url('../fonts/FuturaStd/FuturaStd-Heavy.woff') format('woff'),
+    url('../fonts/FuturaStd/FuturaStd-Heavy.svg#FuturaStd-Heavy') format('svg');
+}
+
+@font-face {
+    font-family: 'FuturaStd-Book';
+    src: url('../fonts/FuturaStd/FuturaStd-Book.eot');
+}
+
+@font-face {
+    font-family: 'FuturaStd-Book';
+    src: url('../fonts/FuturaStd/FuturaStd-Book.woff') format('woff'),
+    url('../fonts/FuturaStd/FuturaStd-Book.svg#FuturaStd-Book') format('svg');
+}
+
+
+
+font( $size=18px, $color=#333333 ){
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: $size;
+	color: $color;
+}
+
+font-light( $size=18px, $color=#333333 ){
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: $size;
+	color: $color;
+	font-weight: 100;
+}
+
+font-bold( $size=18px, $color=#333333 ){
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: 800;
+	font-font-style: bold;
+	font-size: $size;
+	color: $color;
+}
+
+/*font-nazereth($size=18px, $color=#000){
+	font-family: 'NazarethRoman-Medium', Georgia, serif;
+	font-size: $size;
+	color: $color;
+}*/
+
+font-futuraBook($size=18px, $color=#000){
+	font-family: 'FuturaStd-Book', Arial, sans-serif;
+	font-size: $size;
+	color: $color;
+}
+
+font-futuraHeavy($size=18px, $color=#000){
+	font-family: 'FuturaStd-Heavy', Arial, sans-serif;
+	font-size: $size;
+	color: $color;
+}
+
+
+h1,h2,h3,h4,h5 {
+	&.futura {
+		font-futuraHeavy();
+	}
+}
+
+.futura {
+	letter-spacing: 0.75px;
+}
+
+h1 {
+	&.futura {
+		font-size: 36px;
+    	letter-spacing: 3px;
+	}
+	font-size: 36px;
+	letter-spacing: 3px;
+}
+
+h2 {
+	font-size: 24px;
+}
+
+h3 {
+	font-size: 18px;
+}
+
+h4 {
+	font-size: 16px;
+}
+	
+h5, h5.futura {
+	
+	font-size: 10px;
+	line-height: 15px;
+	
+}
+
+
+p {
+  font(16px, #9f9f9f);
+  line-height: 1.5;
+  margin: auto;
+  position: relative;
+  &.futura {
+  	font-futuraBook(16px, #030303);
+  }
+}
+
+span.futura,
+a.futura {
+	font-futuraBook(10px, #030303);
+	line-height: 16px;
+	
+	&:active, &:visited { 
+		color: #111; 
+	}
+	&:hover { 
+		color: #999; 
+	}
+}
+
+
+.default-text-box {
+	max-width: 700px;
+	width: 80%;
+	margin: auto;
+	padding: 15px 0px;
+	position: relative;
+	text-align: center;
+	
+	h5 {
+		padding-bottom: 10px;
+	}
+	p {
+		font-size: 12px;
+		line-height: 25px;
+		padding-bottom: 10px;
+	}
+}
+
+.img-copy.futura {
+	width: 80%;
+	margin: auto;
+	padding: 15px 0px;
+	position: relative;
+	text-align: center;
+	font-size: 12px;
+	line-height: 25px;
+	
+}
+
+.futura.cta {
+	font-futuraBook(12px, #030303 );
+}
+

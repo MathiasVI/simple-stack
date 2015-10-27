@@ -1,0 +1,17 @@
+#   OS
+.DS_Store
+
+#   IDE
+*.sublime-*
+
+# installation
+node_modules
+npm-debug.log
+npm-debug.log.*
+
+# compile 
+
+# if using sass
+.sass-cache
+*.scssc
+
