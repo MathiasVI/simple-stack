@@ -11,13 +11,9 @@ import {Classes, Config, ContentData, Events} from './models';
 
 var App = function(){	
 	
-	var forceResizeEvery = 60 * 2; // 60 fps * 5 seconds
 	var resizeCountFrame = 0;
-	
 	var windowResizeUpdate = true;
 	var scrollUpdate = true;
-	// var forceScrollEvery = 60 * 3;
-	// var scrollCountFrame = 0;
 	var touchCoords = {
 		startX : 0,
 		startY : 0,
@@ -39,7 +35,6 @@ var App = function(){
 			// remove fixed positioning from headers/splash pages.
 			document.body.classList.add('is-touch');
 		}
-
 	}
 
 	function showPage() {
@@ -52,10 +47,8 @@ var App = function(){
 			callStack.requestAnimateFrame[f]();
 		}
 
-		// if( scrollUpdate == true ){
 		scrollDispatcher();
-		// }
-
+		
 		if( windowResizeUpdate ){
 			windowResizeDispatcher();
 		}
@@ -63,10 +56,6 @@ var App = function(){
 		mouseMoveDispatcher();
 		window.requestAnimationFrame(updateFrames);
 	}
-
-	// function scroll(e) {
-	// 	scrollUpdate = true;
-	// }
 
 	function scrollDispatcher() {
 		// do not update if the values are the same.
@@ -76,7 +65,6 @@ var App = function(){
 
 
 		// scrollCountFrame++
-
 		if( Config.scroll.y == currentY && 
 			Config.scroll.x == currentX 
 		){	
@@ -88,9 +76,6 @@ var App = function(){
 			}
 			*/
 			changed = false;
-			
-			// this just doesn't work all the time.
-			// return;
 		}
 
 
@@ -103,12 +88,6 @@ var App = function(){
 
 		Config.scroll.y = currentY;
 		Config.scroll.x = currentX;
-		
-		// if( scrollCountFrame > 5 ){
-		// 	scrollCountFrame = 0;
-		// }
-
-		// scrollUpdate = false;
 	};
 
 	function windowResize(e) {
@@ -124,15 +103,9 @@ var App = function(){
 		if( Config.w.w == ww && 
 			Config.w.h == wh 
 		){
-			// no screen size change.. but should we force the resize every X frames.
-			// if( resizeCountFrame < forceResizeEvery ){
-			// 	return;
-			// }
 			return;
 		}
 
-		// trace( 'resize ' + resizeCountFrame + ' < ' + forceResizeEvery );
-		
 		for( var w = 0; w < callStack['resize'].length; w++){
 			callStack['resize'][w]();
 		}
@@ -140,7 +113,6 @@ var App = function(){
 		Config.w.w = ww;
 		Config.w.h = wh;
 
-		// resizeCountFrame = 0;
 		windowResizeUpdate = false;
 	};
 
@@ -238,11 +210,7 @@ var App = function(){
 		document.addEventListener(Events.dom.resize, windowResizeDispatcher);
 		document.addEventListener(Events.dom.scroll, scrollDispatcher);
 
-		document.addEventListener(Events.app.nextPage, nextPage);
-		document.addEventListener(Events.app.previousPage, previousPage);
-
 		document.addEventListener(Events.dom.mousemove, onMouseMove, false);
-
 		document.addEventListener(Events.window.keydown, keypress );
 
 		if( isTouch() ){
@@ -253,13 +221,10 @@ var App = function(){
 
 	browserShimCheck();
 	bindEvents();
-	// load data/json file.
-	ContentData.init(loaded);
+	
 	updateFrames();
 
 	return { 
-
-		animatingPage : false,
 
 		addToCallStack : function(cb, type){
 			callStack[type].push(cb);
@@ -279,6 +244,18 @@ var App = function(){
 	}			
 }
 
-module.exports = App
+
+// shortcut for logs.
+if( ENV.prod ){
+	window.trace = function(str) {};
+}else{
+	window.trace = function(str) {
+		console.log(str);
+	}
+}
+
+new App();
+
+// module.exports = App
 
 

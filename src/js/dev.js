@@ -1,4 +1,6 @@
-import App from './app';
+// import App from './app';
+
+var App = require('app');
 
 // shortcut for logs.
 window.trace = function(str) {

@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var appPoint = './src/js/dev.js';
+var appPoint = './src/js/app.js';
 var includePath = path.join(__dirname, 'src/js');
 var templatePath = path.join(__dirname, 'build/public/templates');
 var nodeModulesPath = path.join(__dirname, 'node_modules');
@@ -9,6 +9,11 @@ var vendorPath = path.join(__dirname, '/vendors');
 var devTool = 'source-map';
 
 var PROD = JSON.parse(process.env.ENV_PROD || 0);
+
+// variables shared
+var env = {
+    prod : PROD
+};
 
 var plugins = [
     // Avoid publishing files when compilation failed
@@ -29,32 +34,25 @@ if( PROD ){
         new webpack.optimize.UglifyJsPlugin({minimize: true}) 
     );
 
-    appPoint = './src/js/deploy.js';
-
     outputPath = __dirname + '/deploy/public/assets/js/';
     devTool = 'hidden-source-map';
     console.log('---- WEBPACK ----\n running in production');
 }else{
     console.log('---- WEBPACK ----\n running in development');
+
+
 }
 
 console.log(' running webpack in ' + __dirname );
 console.log(' include path ' + includePath );
 console.log(' outputPath path ' + outputPath );
 
+var entryPoints = appPoint;
 
-var entryPoints = {
-    'common' : [appPoint],
-};
+plugins.push( new webpack.DefinePlugin({
+    ENV : JSON.stringify(env)
+}));
 
-// ways of importing node_module libraries into a sep. 'chunk' library file.
-plugins.push(
-    // new webpack.optimize.CommonsChunkPlugin('vendor','libs.js', infinity)
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   names: ['lodash', 'zepto', 'TweenLite'],
-    //   minChunks: Infinity
-    // })
-);
 
 module.exports = {
 
@@ -91,16 +89,22 @@ module.exports = {
 
     plugins: plugins,
 
+
+
     module: {
         loaders: [
 
            {
                 test: /\.js$/,
-                loader: 'babel-loader?optional=runtime',
-                
-                // run babel ONLY in our source code.
+                // loader: 'babel-loader?optional=runtime',
+                loader: 'babel',
+                query: {
+                    presets: ['es2015']
+                },
+                // run babel where:
                 include: [
-                    includePath, nodeModulesPath
+                    includePath, 
+                    nodeModulesPath
                 ]
             },{
                 test: /\.hbs/,
