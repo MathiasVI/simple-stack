@@ -96,7 +96,6 @@ module.exports = {
 
            {
                 test: /\.js$/,
-                // loader: 'babel-loader?optional=runtime',
                 loader: 'babel',
                 query: {
                     presets: ['es2015']
@@ -106,14 +105,27 @@ module.exports = {
                     includePath, 
                     nodeModulesPath
                 ]
-            },{
+            }
+            
+            /*{
                 test: /\.hbs/,
                 loader: 'handlebars-loader',
                 include: [
                     templatePath
                 ],
                 exclude: /node_modules/
-            }
+            }*/
+            
+            /*{
+                test: /\.glsl$/,
+                loader: 'shader'
+            }*/
+
+            // inline base64 URLs for <=80k images, direct URLs for the rest
+            /*{
+                test: /\.(png|jpg)$/, 
+                loader: 'url-loader?limit=819200'
+            }*/ 
 
         ]
 

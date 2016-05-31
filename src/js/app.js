@@ -245,17 +245,21 @@ var App = function(){
 }
 
 
-// shortcut for logs.
+// shortcut for console.log().
 if( ENV.prod ){
-	window.trace = function(str) {};
+	window.trace = function() {};
 }else{
-	window.trace = function(str) {
-		console.log(str);
+	window.trace = function() {
+		console.log(arguments);
 	}
 }
 
-new App();
 
-// module.exports = App
+if( !window.app ){
+	// make it globally accesible
+	window.app = new App();
+}
+
+module.exports = window.app;
 
 
