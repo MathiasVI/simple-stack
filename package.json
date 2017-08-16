@@ -1,73 +1,93 @@
 {
-  "name": "--",
-  "description": "--",
+  "name": " - ",
+  "description": " - ",
   "version": "0.0.1",
-  "private": true,
-  "author": "-",
+  "author": " - ",
   "contributors": [
-    "Jp G"
+    "Jp Gary"
   ],
+  "private": true,
   "repository": {
     "type": "git",
     "url": ""
   },
-  
-  "bugs": {
-    "url": ""
+  "babel": {
+    "presets": [
+      [
+        "es2015"
+      ],
+      "stage-0"
+    ],
+    "plugins": [
+      "transform-runtime",
+      "add-module-exports"
+    ],
+    "env": {
+      "development": {
+        "presets": []
+      },
+      "production": {
+        "presets": []
+      }
+    }
   },
-  
-  "app": { },
-  
+  "app": {
+    "env": "local",
+    "sassDir": "src/css"
+  },
   "engines": {
     "node": "latest",
     "npm": "latest"
   },
-
   "dependencies": {
-    
+    "babel-runtime": "^6.18.0",
+    "express": "4.14.0",
+    "nodemon": "1.11.0"
   },
-
-  "devDependencies": { 
-    "live-reload"         : "latest",
-    "parallelshell"       : "latest",
-    "watch"               : "latest",
-    "webpack"             : "*",
-    "node-libs-browser"   : "*",
-    "eslint"              : "latest",
-    "autoprefixer-stylus" : "latest",
-    "stylus"              : "latest",
-    "cssmin"              : "latest",
-    "babel-eslint"        : "latest",
-    "babel-core"          : "*",
-    "babel-loader"        : "*",
-    "babel-preset-es2015" : "*",
-    "babel-runtime"       : "*",
-    "http-server"		      : "*",
-
-    "gsap"                : "1.18.0"
+  "devDependencies": {
+    "autoprefixer-stylus": "0.11.0",
+    "babel-core": "6.18.2",
+    "babel-eslint": "7.1.0",
+    "babel-loader": "6.2.7",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-runtime": "6.18.0",
+    "cssmin": "0.4.3",
+    "concurrently": "^3.3.0",
+    "eslint": "3.9.1",
+    "gsap": "1.19.0",
+    "html-loader": "^0.4.4",
+    "html-webpack-plugin": "2.21.0",
+    "is_js": "^0.9.0",
+    "json-loader": "0.5.4",
+    "live-reload": "1.1.0",
+    "lodash": "4.16.6",
+    "node-libs-browser": "1.0.0",
+    "parallelshell": "2.0",
+    "stylus": "0.54.5",
+    "three": "0.82.1",
+    "uglify-js": "2.7.4",
+    "underscore": "^1.8.3",
+    "underscore-template-loader": "^0.7.3",
+    "virtual-scroll": "^1.1.1",
+    "watch": "1.0.1",
+    "webpack": "2.1.0-beta.25",
+    "webpack-zepto": "0.0.1"
   },
-
-  "scripts": { 
-    "lint"			        : "eslint ./src/js/**/*.js; exit 0",
-
-    "livereload"    		: "$(npm bin)/live-reload --port 9091 ./build/public/",
-    
-    "build:stylus"          : "npm run build:stylus:global",
-    "build:stylus:global"   : "$(npm bin)/stylus -u autoprefixer-stylus --sourcemap ./src/css/global.styl -o ./build/public/assets/css/global.css",
-    "build:js"      		: "ENV_PROD=0 webpack",
-    
-    "dist:stylus"           : "npm run build:stylus:global",
-    "dist:stylus:global"    : "$(npm bin)/stylus -u autoprefixer-stylus --sourcemap ./src/css/global.styl -o ./deploy/public/assets/css/global.css",
-    "dist:js"      			: "ENV_PROD=1 webpack",
-
-
-    "watch:css"     		: "watch 'npm run build:stylus' ./src/css/",
-    "watch:js"      		: "ENV_PROD=0 webpack --progress --colors --watch --cache",
-
-    "server"					: "http-server -p 8080 build/public/",
-
-    "dev"           		: "npm run watch:js & parallelshell 'npm run watch:css' 'npm run livereload' 'npm run lint' 'npm run server'",
-    "deploy"				: "npm run dist:js & parallelshell 'npm run dist:stylus' 'npm run lint'"
+  "scripts": {
+    "lint": "eslint ./src/js/**/*.js; exit 0",
+    "livereload": "$(npm bin)/live-reload --port 9091 ./public/",
+    "dev": "npm run dev:server & parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run livereload' 'npm run lint'",
+    "dev:stylus": "$(npm bin)/stylus -u autoprefixer-stylus --sourcemap ./src/css/global.styl -o ./public/css/global.css",
+    "dev:js": "ENV_PROD=0 BABEL_ENV=development webpack --progress --colors --cache",
+    "dev:server": "node ./server/server.js",
+    "deploy": "bash ./scripts/deploy.sh",
+    "deploy:css": "$(npm bin)/cssmin ./public/css/global.css > ./dist/css/global.css ",
+    "deploy:js": "ENV_PROD=1 BABEL_ENV=production webpack",
+    "watch:css": "watch 'npm run dev:stylus' ./src/css/",
+    "watch:js": "ENV_PROD=0 BABEL_ENV=development webpack --progress --colors --watch --cache"
   }
 }
-

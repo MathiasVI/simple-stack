@@ -1,141 +1,153 @@
-var path = require('path');
+// var path = require('path');
 var webpack = require('webpack');
-var appPoint = './src/js/app.js';
-var includePath = path.join(__dirname, 'src/js');
-var templatePath = path.join(__dirname, 'build/public/templates');
-var nodeModulesPath = path.join(__dirname, 'node_modules');
-var outputPath = __dirname + '/build/public/assets/js/';
-var vendorPath = path.join(__dirname, '/vendors');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var includePath = 'src/js/';
+// domain path on site to call assets/js
+var publicPath = '/js/';
+// outpath for webpack compilation on 'this' machine.
+var outputPath = __dirname + '/public' + publicPath;
+// source mapping in dev mode.
 var devTool = 'source-map';
+// hash on 'deploy' app on 'dev'.
+var filename = 'app';
 
-var PROD = JSON.parse(process.env.ENV_PROD || 0);
-
-// variables shared
-var env = {
-    prod : PROD
-};
+// Production flag is passed in the npm script.
+var PROD = JSON.parse(process.env.ENV_PROD);
+var CONFIG = require('./src/js/constants/config.js');
+var DATA = require('./src/js/constants/data.js');
 
 var plugins = [
     // Avoid publishing files when compilation failed
-    new webpack.NoErrorsPlugin(),
+    // new webpack.NoErrorsPlugin(),
+    // include plugins for module use. a shortcut so modules don't
+    // need to import the same plugin over and over.
+    /*new webpack.ProvidePlugin({
+    }),*/
+    new webpack.DefinePlugin({
+        PRODUCTION: PROD,
+        VERSION: JSON.stringify("0.0.1"),
+        // TIMESTAMP: JSON.stringify(new Date().getTime())
+        TIMESTAMP: JSON.stringify(new Date())
+    }),
 
-    // include plugins for module use.
-    new webpack.ProvidePlugin({
-       /* i.e.
-       $: "jquery",
-       jQuery: "jquery"
-       */
-    })
+    // Minify and optimize the index.html
+    new HtmlWebpackPlugin({
+        filename: '../index.html',
+        template: 'src/js/templates/index.html',
+        CONFIG: CONFIG,
+				DATA: DATA,
+				PROD: PROD,
+        minify: {
+            removeComments: true,
+            collapseWhitespace: (PROD) ? true : false,
+            removeRedundantAttributes: true,
+            useShortDoctype: true,
+            removeEmptyAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            keepClosingSlash: true,
+            minifyJS: true,
+            minifyCSS: true,
+            minifyURLs: true,
+        },
+        inject: false,
+    }),
 ];
 
-
+// deploy this to a different output
 if( PROD ){
+
     plugins.push(
-        new webpack.optimize.UglifyJsPlugin({minimize: true}) 
+        new webpack.optimize.UglifyJsPlugin({
+            // minimize: true,
+            drop_console: true,
+            compress: {
+                warnings: false,
+                pure_funcs: [ 'console.log' ]
+            },
+            output: {
+                comments: false,
+            },
+        })
     );
 
-    outputPath = __dirname + '/deploy/public/assets/js/';
-    devTool = 'hidden-source-map';
+    filename = '[hash]';
+    outputPath = __dirname + '/dist'+ publicPath;
+    devTool = false; //'hidden-source-map';
+
     console.log('---- WEBPACK ----\n running in production');
 }else{
     console.log('---- WEBPACK ----\n running in development');
-
-
 }
 
 console.log(' running webpack in ' + __dirname );
 console.log(' include path ' + includePath );
 console.log(' outputPath path ' + outputPath );
 
-var entryPoints = appPoint;
-
-plugins.push( new webpack.DefinePlugin({
-    ENV : JSON.stringify(env)
-}));
-
 
 module.exports = {
 
     /*
     http://webpack.github.io/docs/configuration.html
-    
-    ENTRY 
+
+    ENTRY
     If you pass a string: The string is resolved to a module which is loaded upon startup.
     If you pass an array: All modules are loaded upon startup. The last one is exported.
     If you pass an object: Multiple entry bundles are created. The key is the chunk name. The value can be a string or an array.
     */
-    
-    // context: './src/js',
-    // context: includePath,
-    
-    resolve : {
-        alias : {
-            
-        }
-    },
 
-    entry: entryPoints,
-    
-    // if multiple outputs, use [name] and it will use the name of the entry point, and loop through them
+    entry: ['babel-polyfill', './src/js/app.es6.js'],
+
     output: {
         path: outputPath,
-        filename: '[name].js'
+        publicPath: publicPath,
+        filename: filename+'.js'
     },
 
-    // any external files to ignore requires() of.
-    externals: {
-        
+    resolve : {
+        alias : {
+            // 'babel-polyfill': 'babel-polyfill/dist/polyfill.js',
+            'TweenLite': 'gsap/src/uncompressed/TweenLite',
+            'TweenMax': 'gsap/src/uncompressed/TweenMax',
+        }
     },
-
-    plugins: plugins,
-
 
 
     module: {
         loaders: [
-
-           {
+            {
+              test: /\.json$/,
+              loader: 'json'
+            },
+            {
+              test: /\.html$/,
+              loader: "underscore-template-loader",
+              query: {
+                engine: 'lodash',
+              }
+            },
+            {
                 test: /\.js$/,
+
+                // loader: 'babel-loader',
                 loader: 'babel',
+                // include: includePath,
+                exclude: /node_modules/,
+
                 query: {
-                    presets: ['es2015']
-                },
-                // run babel where:
-                include: [
-                    includePath, 
-                    nodeModulesPath
-                ]
+
+                }
             }
-            
-            /*{
-                test: /\.hbs/,
-                loader: 'handlebars-loader',
-                include: [
-                    templatePath
-                ],
-                exclude: /node_modules/
-            }*/
-            
-            /*{
-                test: /\.glsl$/,
-                loader: 'shader'
-            }*/
-
-            // inline base64 URLs for <=80k images, direct URLs for the rest
-            /*{
-                test: /\.(png|jpg)$/, 
-                loader: 'url-loader?limit=819200'
-            }*/ 
-
         ]
 
     },
+
+    plugins: plugins,
 
     stats: {
         // Nice colored output
         colors: true
     },
-    
+
     // Create Sourcemaps for the bundle
     devtool: devTool
 
