@@ -41,8 +41,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.18.0",
-    "express": "4.14.0",
-    "nodemon": "1.11.0"
+    "express": "4.14.0"
   },
   "devDependencies": {
     "autoprefixer-stylus": "0.11.0",
@@ -56,34 +55,28 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-runtime": "6.18.0",
     "cssmin": "0.4.3",
-    "concurrently": "^3.3.0",
-    "eslint": "3.9.1",
     "gsap": "1.19.0",
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "2.21.0",
-    "is_js": "^0.9.0",
+    "http-server": "0.11.1",
     "json-loader": "0.5.4",
     "live-reload": "1.1.0",
     "lodash": "4.16.6",
     "node-libs-browser": "1.0.0",
     "parallelshell": "2.0",
     "stylus": "0.54.5",
-    "three": "0.82.1",
     "uglify-js": "2.7.4",
     "underscore": "^1.8.3",
     "underscore-template-loader": "^0.7.3",
-    "virtual-scroll": "^1.1.1",
     "watch": "1.0.1",
-    "webpack": "2.1.0-beta.25",
-    "webpack-zepto": "0.0.1"
+    "webpack": "2.1.0-beta.25"
   },
   "scripts": {
-    "lint": "eslint ./src/js/**/*.js; exit 0",
     "livereload": "$(npm bin)/live-reload --port 9091 ./public/",
     "dev": "npm run dev:server & parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run livereload' 'npm run lint'",
     "dev:stylus": "$(npm bin)/stylus -u autoprefixer-stylus --sourcemap ./src/css/global.styl -o ./public/css/global.css",
     "dev:js": "ENV_PROD=0 BABEL_ENV=development webpack --progress --colors --cache",
-    "dev:server": "node ./server/server.js",
+    "dev:server": "$(npm bin)/http-server ./public -p 8080",
     "deploy": "bash ./scripts/deploy.sh",
     "deploy:css": "$(npm bin)/cssmin ./public/css/global.css > ./dist/css/global.css ",
     "deploy:js": "ENV_PROD=1 BABEL_ENV=production webpack",

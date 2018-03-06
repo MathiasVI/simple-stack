@@ -1,5 +1,3 @@
-// import $ from 'webpack-zepto';
-
 import GlobalStore from '../models/globalStore';
 import BaseComponent from './baseComponent';
 

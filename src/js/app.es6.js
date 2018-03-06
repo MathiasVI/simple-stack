@@ -1,5 +1,4 @@
 // import 'babel-polyfill';
-// import $ from 'webpack-zepto';
 // import TweenMax from 'TweenMax';
 // import is from 'is_js';
 

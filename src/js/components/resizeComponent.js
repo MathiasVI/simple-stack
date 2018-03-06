@@ -1,4 +1,3 @@
-import $ from 'webpack-zepto';
 import BaseComponent from './baseComponent';
 import GlobalStore from '../models/globalStore';
 
@@ -48,9 +47,9 @@ class ResizeComponent extends BaseComponent {
 	}
 
 	bindWindowEvents() {
-			$(window).on('resize', (e) => {
-				this.update();
-			});
+		window.onresize = (e) => {
+			this.update();
+		}
 	}
 }
 
