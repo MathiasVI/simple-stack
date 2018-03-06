@@ -1,4 +1,4 @@
-# Starter ES6 - Classes - Webpack
+# Starter ES6 - Classes - with Parcel builder
 
 ## Dependencies
 
