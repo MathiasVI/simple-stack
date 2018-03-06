@@ -9,5 +9,11 @@ npm i
 
 ## Tasks
 
+Run the dev environment:
 * ```npm run dev```
-* ```npm run deploy```
+
+Create a distribution build:
+* ```npm run build```
+
+Run the distribution build:
+* ```npm run dist```

@@ -2,40 +2,39 @@
 // import {READY, HIDE} from '../constants/classes';
 import CONFIG from '../constants/config';
 import GlobalStore from '../models/globalStore';
-import ROOT_TEMPLATE from '../templates/root.html';
 
 class RootView {
 
 	constructor(obj) {
 		this._data = obj;
+
+		this.imgList = [
+			"5267379275_1a84a09e3d_b.jpg",
+			"5267991896_8137250f0c_b.jpg",
+			"5899076139_363c094e92_b.jpg",
+			"5899079855_6699907c42_b.jpg",
+			"5899080979_5742d2c233_b.jpg",
+			"P4220231.jpg",
+			"PB060853.jpg",
+		];
+
+		this.imageIndex = 0;
+
 	}
 
-	render(_el) {
+	render() {
 		this._data.copy = CONFIG.root;
-		this.el = this.createRootFromTemplate(ROOT_TEMPLATE(this._data));
 
-		_el.append(this.el);
-
-		this.defineDOMElements();
-
+		this.el = document.querySelector('#root-view');
+		
 		this.bindEvents();
 
-		// if (window.ga) {
-		// 	window.ga('send', 'pageview', '/root');
-		// }
+		this.loadNewImg();
 
 	}
 
-	createRootFromTemplate( template ) {
-		let d = document.createElement('div');
-		d.innerHTML = template;
-		return d.firstChild;
-	}
-
-	defineDOMElements() {
-		this.rootWrapper = document.querySelector('#content-' + this._data.UUID);
-
-		this.el_input = this.el.querySelector("input");
+	loadNewImg() {
+		this.imageIndex = Math.floor(Math.random() * this.imgList.length);
 	}
 
 	bindEvents() {
@@ -47,10 +46,6 @@ class RootView {
 
 	}
 
-
-	sanitizeInput(e) {
-		console.log('---- sanitize ----');
-	}
 
 	scrollUpdate() {
 

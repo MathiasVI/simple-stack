@@ -1,6 +1,4 @@
-// import 'babel-polyfill';
-// import TweenMax from 'TweenMax';
-// import is from 'is_js';
+import TweenMax from 'gsap';
 
 import {HIDE} from './constants/classes';
 import GlobalStore from './models/globalStore';
@@ -12,9 +10,6 @@ class App {
 	constructor() {
 
 		console.log('--- APP ---'); // @preserve eslint-disable-line no-console
-		console.log(' VERSION ', VERSION ); // @preserve eslint-disable-line no-console
-		console.log(' PRODUCTION ', PRODUCTION); // @preserve eslint-disable-line no-console
-		console.log(' TIMESTAMP ', TIMESTAMP); // @preserve eslint-disable-line no-console
 		console.log('\n\n\n'); // @preserve eslint-disable-line no-console
 
 		new ResizeComponent({});
@@ -40,19 +35,15 @@ class App {
 
 		}, 150 );
 
-		// const TrackingView = require('./views/trackingView');
-		// this.trackingView = new TrackingView();
-		// TweenMax.ticker.addEventListener("tick", (e) => this.raf());
+		TweenMax.ticker.addEventListener("tick", (e) => this.raf());
 	}
 
-
-
+	// request animation frame managed by Tweenmax ticker.
 	raf() {
 		// update run through the RAF call stack:
-
-		// for( var c = 0; c < GlobalStore.get('rafCallStack').length; c++) {
-		// 	GlobalStore.get('rafCallStack')[c]();
-		// }
+		for( var c = 0; c < GlobalStore.get('rafCallStack').length; c++) {
+			GlobalStore.get('rafCallStack')[c]();
+		}
 	}
 }
 

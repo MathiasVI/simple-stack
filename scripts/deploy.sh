@@ -4,17 +4,10 @@ printf "\n\n----- running deployment -----\n"
 rm -rf ./dist/*
 
 mkdir ./dist
-mkdir ./dist/css
-mkdir ./dist/js
 
 printf "\n\n - run deploy:js -\n"
-# run js minification / webpack
-npm run deploy:js
-
-# run stylus compressed.
-printf "\n\n - run stylus/css -\n"
-npm run dev:stylus
-npm run deploy:css
+# run parcel compiles and compresses js/css.
+npm run build:parcel
 
 
 # ------ 
@@ -23,12 +16,11 @@ printf "\n\n - copying assets/files -\n"
 # this should just be everything that isn't js/css:
 #
 
-cp -r ./public/favicon.ico ./dist/favicon.ico
+cp -r ./assets/favicon.ico ./dist/favicon.ico
 
 # Assets:
-cp -r ./public/imgs ./dist/imgs
-cp -r ./public/fonts ./dist/fonts
-cp -r ./public/svgs ./dist/svgs
-cp -r ./public/tracking-libs ./dist/tracking-libs
+cp -r ./assets/imgs ./dist/imgs
+cp -r ./assets/fonts ./dist/fonts
+cp -r ./assets/svgs ./dist/svgs
 
 printf "\nDONE\n"

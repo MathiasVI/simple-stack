@@ -1,42 +1,13 @@
-* {
-	text-rendering optimizeLegibility !important
-  -webkit-font-smoothing antialiased !important
-  font-smoothing antialiased !important
-  -moz-osx-font-smoothing grayscale !important
-}
-
-@font-face {
-  // font-family: 'BrandonGrotesque-Bold';
-  // src: url("../fonts/brandongrotesque/brandongrotesque-bold.eot");
-  // src: url("../fonts/brandongrotesque/brandongrotesque-bold.eot") format("eot"),
-  // 	url("../fonts/brandongrotesque/brandongrotesque-bold.woff2") format("woff2"),
-  // 	url("../fonts/brandongrotesque/brandongrotesque-bold.woff") format("woff"),
-  // 	url("../fonts/brandongrotesque/brandongrotesque-bold.ttf") format("truetype"),
-  // 	url("../fonts/brandongrotesque/brandongrotesque-bold.svg") format("svg");
-}
-
-@font-face {
-  // font-family: 'ACaslonPro-Italic';
-  // src: url("../fonts/acaslonpro/acaslonpro-italic.eot");
-  // src: url("../fonts/acaslonpro/acaslonpro-italic.eot") format("eot"),
-  // url("../fonts/acaslonpro/acaslonpro-italic.woff2") format("woff2"), url("../fonts/acaslonpro/acaslonpro-italic.woff") format("woff"),
-  // url("../fonts/acaslonpro/acaslonpro-italic.ttf") format("truetype"), url("../fonts/acaslonpro/acaslonpro-italic.svg") format("svg");
-}
-@font-face {
-  // font-family: 'ACaslonPro-Regular';
-  // src: url("../fonts/acaslonpro/acaslonpro-regular.woff2") format("woff2");
-}
 
 font-serif() {
-	// font-family: 'Merriweather', serif;
-	font-family: 'Lora', Georgia, serif;
+	font-family: Georgia, serif;
 	font-weight: 400;
 	// font-size: $size;
 	// color: $color;
 }
 
 font-sansserif( $size=18px, $color=#333333 ){
-	font-family: 'Karla', Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 	font-size: $size;
 	color: $color;
 	// text-transform: uppercase;
@@ -60,7 +31,6 @@ h1 {
   font-sansserif(2.125em, #FFF);
 	&.serif {
 		font-serif();
-		// font-weight: 900;
 	}
 }
 
