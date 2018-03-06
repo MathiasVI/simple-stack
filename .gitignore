@@ -1,6 +1,6 @@
 *.sublime-workspace
 .DS_Store
-
+.cache
 
 public/css/global.css
 public/css/global.css.map
